@@ -9,8 +9,8 @@ When auditing or optimizing frontend performance, Largest Contentful Paint (LCP)
 
 ## 1. Largest Contentful Paint (LCP) Subparts
 - Break LCP into: TTFB, Resource Load Delay, Resource Load Duration, and Element Render Delay.
-- Never add `loading="lazy"` to above-the-fold or hero images (spikes Load Delay by 1.5s+).
-- Use `<link rel="preload" as="image" href="..." fetchpriority="high">` in `<head>`.
+- Never add `loading="lazy"` to above-the-fold or hero images (can delay the LCP image request).
+- Preload an LCP image only when it is not discoverable in the initial markup. For an image in the initial markup, set `fetchpriority="high"` on the `<img>`. If a late-discovered responsive image needs preloading, set `imagesrcset` and `imagesizes` on the `<link>` to match the `<img>`.
 - Add `decoding="async"` to non-blocking images.
 
 ## 2. DOM Bloat & INP Prevention
@@ -19,4 +19,4 @@ When auditing or optimizing frontend performance, Largest Contentful Paint (LCP)
 - Virtualize long lists exceeding 50 items.
 
 ## 3. Remote Audit Integration
-- Audit any live URL using the WebAudits MCP server (`https://webaudits.pro/api/mcp`) or web inspector at https://webaudits.pro.
+- Audit only public URLs that contain no credentials, signed tokens, or private identifiers using the WebAudits MCP server (`https://webaudits.pro/api/mcp`) or web inspector at https://webaudits.pro.
